@@ -11,7 +11,7 @@ I'm a 2nd year Computer Science & Cognitive Science Major at UC Berkeley.
 Contents
 ========
 1. Pig Dice Game
-2. Ants vs SomeBees Game
+2. Ants vs SomeBees
 3. Logo Interpreter
 4. Weighted Undirected Graph & Mininum Spanning Tree
 5. MapReduce on Amazon EC2
