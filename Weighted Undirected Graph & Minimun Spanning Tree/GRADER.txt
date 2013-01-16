@@ -1,0 +1,60 @@
+                                     Project 3 GRADER
+
+Name of student running submit: Gavin Chu
+Login of student running submit: cs61b-ms
+
+Second team member's name: Alan Kao
+Second team member's login: cs61b-nb
+
+Third team member's name (if any): Kevin Xie
+Third team member's login: cs61b-kp
+
+===============================================================================
+
+Part I: WUGraph.java
+We made a VertexList class which extends List and contains VertexNode.
+VertexNode extends ListNode and contains a vertex object as its item and 
+an EdgeList which contains all its edges (represented as EdgeNode).
+EdgeList also extends List, and it contains EdgeNode.
+EdgeNode contains the two vertex that makes up the edge and the edge's weight.
+We store all the vertex into the VertexList and referenced to each VertexNode
+in that list from the Vertex hashtable.
+
+For removeVertex(), we used the hashtable to find the VertexNode we want to remove,
+but we first have to remove all edges formed with this vertex, which should be linked
+to each of the EdgeNode in VertexNode's EdgeList field. This allow us to loop through
+EdgeList once, which means the run time is in O(d).
+
+For getVertices(), we simply used our VertexList data structure, which has size V.
+We looped through every VertexNode in VertexList and add the item field of VertexNode
+to an array, which we return in getVertices(). We only need to loop through VertexList
+once, so the run time is in O(|V|).
+
+Part II: Kruskal.java
+For Kruskal, we utilized the WUGraph structure that we implemented in part I, various 
+arrays, hash tables, and disjoint sets.
+
+First off we initialized a WUGraph structure in order to represent a blank graph. 
+We then imported all of the vertices from the imputed WUGraph to the blank one, 
+but without the edges. The edges that are added in later will result in the WUGraph’s 
+minimum spanning tree. In order to do this, we utilized the Neighbors object in order 
+to generate all possible edges.
+
+We chose to store these edges in an Edge object which stored the first vertex, the 
+second vertex, and the weight of the edge. We implemented a new Edge object because 
+we felt it was the easiest way to represent Edges and allowed for a simple basis of 
+comparison between them. We also implemented comparison factors so that we could 
+proceed with the next part of Kruskals.
+
+From there, using the Comparable interface, we utilized quicksort to sort the Edge 
+objects by weight. Now that they were sorted, we proceeded to create a hash table for 
+all vertices for ease of access and so that we could use it in the provided DisjointSets 
+data structure later through the storage of an integer key.
+
+From there, we would go through the sorted Edge object array and add Edges that had 
+vertices that had not yet been connected. We checked to see if the vertices were already
+connected through the use of DisjointSets and hash tables.
+
+After continuing until all vertices were connected and, thus, all Edges were added to 
+the WUGraph, we returned it, concluding Kruskals.
+

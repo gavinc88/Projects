@@ -1,0 +1,103 @@
+/* EdgeNode.java */
+
+package list2;
+
+public class EdgeNode extends ListNode{
+
+    protected EdgeNode prev;
+    protected EdgeNode next;
+    protected Object vertex1;
+    protected Object vertex2;
+    protected int weight;
+    protected EdgeNode partner;
+    //inherited item and myList, but item is replaced by the two vertices
+
+    public EdgeNode(Object v1, Object v2, int w, EdgeList l, EdgeNode p, EdgeNode n){
+    	vertex1 = v1;
+    	vertex2 = v2;
+        weight = w;
+    	myList = l;
+    	prev = p;
+    	next = n;
+    }
+
+    public Object getV1(){
+        return vertex1;
+    }
+
+    public Object getV2(){
+        return vertex2;
+    }
+
+    public void setPartner(EdgeNode twin){
+    	this.partner = twin;
+    }
+    
+    public int getWeight(){
+        return weight;
+    }
+
+    public void setWeight(int w){
+        weight = w;
+    }
+
+    public EdgeNode next() throws InvalidNodeException{
+    	if(!isValidNode()){
+            throw new InvalidNodeException("next() called on invalid node");
+    	}
+    	return next;
+    }
+
+    public EdgeNode prev() throws InvalidNodeException{
+    	if(!isValidNode()){
+            throw new InvalidNodeException("prev() called on invalid node");
+    	}
+    	return prev;
+    }
+    
+    public EdgeNode getPartner() throws InvalidNodeException{
+    	if(!isValidNode()){
+            throw new InvalidNodeException("getPartner() called on invalid node");
+    	}
+    	return partner;
+    }
+
+    public void insertAfter(Object v1, Object v2, int w) throws InvalidNodeException{
+    	if(!isValidNode()){
+            throw new InvalidNodeException("insertAfter() called on invalid node");
+    	}
+    	EdgeNode nodeAfter = ((EdgeList)myList).newEdgeNode(v1, v2, w, ((EdgeList)myList), this, next);
+    	next = nodeAfter;
+    	next.next.prev = nodeAfter;
+    	myList.size++;
+    }
+
+    public void insertAfter(Object item){}
+
+    public void insertBefore(Object v1, Object v2, int w) throws InvalidNodeException{
+        if (!isValidNode()) {
+            throw new InvalidNodeException("insertBefore() called on invalid node");
+        }
+        EdgeNode nodeBefore = ((EdgeList)myList).newEdgeNode(v1, v2, w, ((EdgeList)myList), prev, this);
+        prev = nodeBefore;
+        prev.prev.next = nodeBefore;
+        myList.size++;
+    }
+
+    public void insertBefore(Object item){}
+
+    public void remove() throws InvalidNodeException {
+        if (!isValidNode()) {
+            throw new InvalidNodeException("remove() called on invalid node");
+        }
+        next.prev = prev;
+        prev.next = next;
+        myList.size--;
+        // Make this node an invalid node, so it cannot be used to corrupt myList.
+        myList = null;
+        // Set other references to null to improve garbage collection.
+        next = null;
+        prev = null;
+    }
+
+}

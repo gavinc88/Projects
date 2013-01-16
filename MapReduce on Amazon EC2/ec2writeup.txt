@@ -1,0 +1,152 @@
+ec2experience.txt
+Gavin Chu cs61c-de
+
+1. On the big dataset, what were the top 20 words by relevance for each of these n-grams, and funcNum pairs: 
+*Note that this is the output prior to commenting out the combiner for job 2
+
+The reduce2() is used as both a combiner and reducer for job 2, which resulted in producing a different output.
+I observed my output from jurisdiction and found that the cooccurence rates get closer and closer to zero, jump back up (4.1689115642856525	jiangning), get close to zero, jump back up again, and repeat a total of 32 times. 32 turns out to be the number of mappers used for job 2, which means the reduce2() for combiner turned out to be somewhat redundant and counterintuitive. The combiner grouped the sorted outputs, which are passed in to the reducer, so the reducer sorts the data based on the groups formed from each mapper rather than the sorted by the grams' cooccurence rate from all the mappers.
+
+After commenting out the combiner for job 2, the output should be 100 lines long and sorted by the gram's cooccurence rate from all the grams.
+
+("jurisdiction", 0)
+2.8852518461248065	maclay
+0.9091565569902544	judge
+0.8552883307612996	casino
+0.6629844800719538	viders
+0.5682724114902461	lsuc
+0.5566711137666123	_land_
+0.40736194946396326	sovereignty
+0.39339539961966885	allegiance
+0.24853182143388883	namo
+0.2474365956349238	person
+0.22341887017385448	mexico
+0.2220164346592863	subhierarchy
+0.20275409712428147	forfeiture
+0.19671416428558106	commemorations
+0.18039794246448185	exercising
+0.1763534067519808	and
+0.17180573884353792	property
+0.17024282874217464	supercedes
+0.1490169028665911	parental
+0.14618467996345894	pending
+...
+3.288158096257202E-6	commitment
+1.8191606914971701E-6	files
+0.0	00000000000000000000000000000e
+4.1689115642856525	jiangning
+3.2830353506914207	hupp
+3.239148822846835	deffered
+...
+1.6715377861991866E-6	showed
+1.0772981937632268E-6	industries
+7.918939178225468E-7	rich
+0.0	00000000000000000001001001100000001000000010000110001010000000000010001000001110110100000000000001100100010000000011100100100100
+117.86215489435645	948d
+10.656788863645742	howarh
+1.7317727655181565	icc
+1.5223984090922489	expectably
+1.1901244501217227	admtted
+0.7212374092063466	circuit
+0.6449881870022692	workman
+...
+
+("court order", 1) 
+2.130214583478951		workplaces of
+0.5366018664035026		videos as
+0.12750070638634678		you saying
+0.11982009727868811		you obeying
+0.11447506483274722		was severely
+0.03295868095391877		words the
+0.03058255624036555		usa and
+0.029241030394552774	was no
+0.019997776802545737	visitations the
+0.018755361650371893	you by
+0.017188882287258886	while i
+0.015249830562742124	was breaching
+0.0121439233427503		you like
+0.011626563732346721	you try
+0.007691452616363744	zach takes
+0.004087304058662942	vacation of
+0.002136747119038264	wishes adam
+0.0019496935543363617	wrong in
+0.001674219137302633	wants to
+0.0012990381058291833	way that
+
+("in my opinion", 2)
+7.791702486464475	your reputation for
+5.328394431822871	zimhoni i f
+3.349473453988405	you picked two
+2.503899296137647	you to state
+1.5895169306347199	you state being
+0.949145582666573	your 1 goal
+0.6660493039778589	your comment essentially
+0.6092105157501919	yourself to fly
+0.6032079991905476	your doc when
+0.38647770622943134	your views here
+0.34469028525174145	your stated reasons
+0.33302465198892944	zine in my
+0.3087687687736095	you d never
+0.2783173275191147	your approval if
+0.23728639566664325	your personal ideology
+0.231217472092803	your other example
+0.20307017191673063	your plan seems
+0.16094795259729358	you quoted me
+0.1591162752172689	your list there
+0.12733929850894804	you found out
+
+2. How long did each run of program take on each number of instances? How many mappers, and how many reducers did you use?
+jurisdiction 0 with 5 workers:
+runtime: 32min 28sec
+mappers: 316
+reducers: 32
+
+jurisdiction 0 with 9 workers:
+runtime: 19min 12sec
+mappers: 316
+reducers: 32
+
+court order 1 with 5 workers:
+runtime: 40min 10sec
+mappers: 316
+reducers: 32
+
+court order 1 with 9 workers:
+runtime: 22min 23sec
+mappers: 316
+reducers: 32
+
+in my opinion 2 with 5 workers:
+runtime: 57min 39sec
+mappers: 316
+reducers: 32
+
+in my opinion 2 with 9 workers:
+runtime: 35min 1sec
+mappers: 316
+reducers: 32
+
+3. What was the median processing rate per GB (= 2^30 bytes) of input for the tests using 5 workers?  Using 9 workers?
+5 workers: (19.139GB*3)/(1948sec + 2410sec + 3459sec) = 0.007345GB/sec = 7.345MB/sec
+9 workers: (19.139GB*3)/(1152sec + 1343sec + 2101sec) = 0.012492GB/sec = 12.492MB/sec
+
+4. What percentage speedup did you get using 9 workers instead of 5? How well, in your opinion, does Hadoop parallelize your code?
+(12.492/7.345) = 1.7
+70% speed increase
+Yes, Hadoop did parallelize my code because there is an increase in speed when the cluster is enlarged to 9 workers. This means work is spread out among the workers as opposed to having 1 worker do all the work.
+
+5. What was the price per GB processed? (Recall that an extra-large instance costs $0.68 per hour, rounded up to the nearest hour.)
+5 workers: $0.68/hour * 1hour/60sec * 1sec/0.007345GB = $1.54/GB
+9 workers: $0.68/hour * 1hour/60sec * 1sec/0.012492GB = $0.91/GB
+
+6. How many dollars in EC2 credits did you use to complete this project? (Please don't use ec2-usage, as it tends to return bogus costs. You should work out the math yourself.)
+total time on cluster with 5 workers = 7817sec = 2.17hours -> round up to 3
+$0.68/hour * 3hours * 5 workers = $10.20
+total time on cluster with 9 workers = 4596sec = 1.28hours -> round up to 2
+$0.68/hour * 2hours * 9 workers = $12.24
+total cost = $10.20 + $12.24 = $22.44
+
+This project cost me at approximately $22.44, but this cost does not account for the time when the cluster is running but no job is running. For example the preparation time intervals between each of the 6 jobs I ran, and the time it took me to retrieve the output. In principle, I should have calculated the cost based on the clusters' running time, which might be more expensive, but I did not keep track of when I terminated each clusters, so I could only do my estimate based on the actual time it took all 6 jobs to run, which pretty much represents the majority of the time I spent on EC2.
+
+7. Extra credit: did you use a combiner? What does it do, specifically, in your implementation?
+Yes, my combiner sums up the total occurence of a single gram by adding 1 each time since the mapper outputs (gram, 1). The reducer then takes in (gram, n) where n is the total occurence of a specific gram instead of (gram, 1). This should make the reduce job easier since it doesn't have to go through the same gram more than once.
