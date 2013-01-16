@@ -1,0 +1,80 @@
+;;; Your entry for the Logo contest
+;;;
+;;; Title: 
+;;;   Rainbow Ring
+;;;
+;;; Description:
+;;;   <insert your haiku>
+
+to rainbow
+color "red
+begin_fill
+circle 40
+end_fill
+rt 60
+color "orange
+begin_fill
+circle 35
+end_fill
+rt 60
+color "yellow
+begin_fill
+circle 30
+end_fill
+rt 60
+color "green
+begin_fill
+circle 25
+end_fill
+rt 60
+color "blue
+begin_fill
+circle 20
+end_fill
+rt 60
+color "purple
+begin_fill
+circle 15
+end_fill
+rt 60
+end
+
+to ring
+repeat 8 [rainbow penup lt 135 fd 250 pendown]
+end
+
+to design :d :k
+ifelse equal? :k 1 [ring penup fd :d rt 60 pendown] [design_helper :d :k]
+end
+
+to design_helper :d :k
+ring penup fd :d lt 60 pendown
+design :d difference :k 1
+end
+
+speed 3
+design 225 6
+
+;repeat 3 [rainbow penup rt 30 fd 150 rt 90 pendown]
+;to tri :exp
+;repeat 3 [run :exp rt 120]
+;end
+
+;to design_2 :d :k
+;tri [ifelse equal? :k 1 [ring penup 150 pendown] [leg :d :k]]
+;end
+
+;to leg :d :k
+;design div :d 2 difference :k 1
+;penup fd :d pendown
+;end
+
+;design_2 300 2
+
+
+;to design :d :k
+;if equal? :k 0 [large_ring]
+;ifelse equal? (div :k 6) 0 [large_ring penup fd :d rt 60 pendown] [design_helper :d :k]
+
+
+;color "red begin_fill circle 40 end_fill rt 60 color "orange begin_fill circle 35 end_fill rt 60 color "yellow begin_fill circle 30 end_fill rt 60 color "green begin_fill circle 25 end_fill rt 60 color "blue begin_fill circle 20 end_fill rt 60 color "purple begin_fill circle 15 end_fill rt 60

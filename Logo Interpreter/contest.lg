@@ -1,0 +1,32 @@
+;;; Your entry for the Logo contest
+;;;
+;;; Title: 
+;;;   Rainbow Ring
+;;;
+;;; Description:
+;;;   <insert your haiku>
+
+to rainbow
+color "red begin_fill circle 40 end_fill rt 60
+color "orange begin_fill circle 35 end_fill rt 60
+color "yellow begin_fill circle 30 end_fill rt 60
+color "green begin_fill circle 25 end_fill rt 60
+color "blue begin_fill circle 20 end_fill rt 60
+color "purple begin_fill circle 15 end_fill rt 60
+end
+
+to ring
+repeat 8 [rainbow penup lt 135 fd 250 pendown]
+end
+
+to design :d :k
+ifelse equal? :k 1 [ring penup fd :d rt 60 pendown] [design_helper :d :k]
+end
+
+to design_helper :d :k
+ring penup fd :d lt 60 pendown
+design :d difference :k 1
+end
+
+speed 2
+design 250 6
