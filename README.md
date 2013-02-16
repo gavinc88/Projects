@@ -17,3 +17,5 @@ Contents
 5. MapReduce on Amazon EC2
 6. Matrix Multiply Parallelization using SSE Intrincis & OpenMP
 7. Processor Design Using Logisim
+
+Look at the README.txt in each project folder for more info on each project.
