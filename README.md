@@ -15,6 +15,5 @@ Contents
 3. Logo Interpreter
 4. Weighted Undirected Graph & Mininum Spanning Tree
 5. MapReduce on Amazon EC2
-6. MIPS Instruction Set Simulator
-7. Matrix Multiply Parallelization using SSE Intrincis & OpenMP
-8. Processor Design Using Logisim
+6. Matrix Multiply Parallelization using SSE Intrincis & OpenMP
+7. Processor Design Using Logisim
